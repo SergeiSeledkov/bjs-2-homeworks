@@ -26,11 +26,11 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
   let amountVerified = parseInt(amount);
 
   if (isNaN(percentVerified) === true) {
-    totalAmount = `Параметр процентная ставка содержит неправильное значение ${percent}`;
+    totalAmount = `Параметр "Процентная ставка" содержит неправильное значение "${percent}"`;
   } else if (isNaN(contributionVerified) === true) {
-    totalAmount = `Параметр начальный взнос содержит неправильное значение ${contribution}`;
+    totalAmount = `Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`;
   } else if (isNaN(amountVerified) === true) {
-    totalAmount = `Параметр общая стоимость содержит неправильное значение ${amount}`;
+    totalAmount = `Параметр "Общая стоимость" содержит неправильное значение "${amount}"`;
   } else {
     //Тело кредита
     let creditBody = amountVerified - contributionVerified;
@@ -54,9 +54,9 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
       let fullPayment = monthlyPayment * creditTerm;
 
       fullPayment = fullPayment.toFixed(2);
-      totalAmount = fullPayment;
+      totalAmount = +fullPayment;
 
-      console.log(fullPayment);
+      console.log(totalAmount);
     }
 
   }
