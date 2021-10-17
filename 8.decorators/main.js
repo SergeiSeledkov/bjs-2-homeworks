@@ -11,10 +11,10 @@ upgradedAddThree(1, 2, 3);
 
 const sendSignal = () => console.log('Сигнал послан'); 
 const upgradedSendSignal = debounceDecoratorNew(sendSignal,2000);
-setTimeout(upgradedSendSignal()); 
-setTimeout(upgradedSendSignal(),300); 
-setTimeout(upgradedSendSignal(),900); 
-setTimeout(upgradedSendSignal(),1200);
-setTimeout(upgradedSendSignal(),2300);
-setTimeout(upgradedSendSignal(),4400);
-setTimeout(upgradedSendSignal(),4500);
+setTimeout(() => upgradedSendSignal()); 
+setTimeout(() => upgradedSendSignal(),300); 
+setTimeout(() => upgradedSendSignal(),900); 
+setTimeout(() => upgradedSendSignal(),1200);
+setTimeout(() => upgradedSendSignal(),2300);
+setTimeout(() => upgradedSendSignal(),4400);
+setTimeout(() => upgradedSendSignal(),4500);
