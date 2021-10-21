@@ -6,17 +6,16 @@ function cachingDecoratorNew(func) {
     let findIndexHash = cache.findIndex(item => item.hash === hash);
 
     if (findIndexHash !== -1 ) {
-        return "Из кэша: " + cache[findIndexHash].value;
-    } else {
-        const result = func(...args);
-        cache.push({hash, value:result});
-
-        if (cache.length > 5) { 
-          cache.shift();
-        }
-
-        return "Вычисляем: " + result;  
+      return "Из кэша: " + cache[findIndexHash].value;
     }
+    
+    const result = func(...args);
+    cache.push({hash, value:result});
+
+    if (cache.length > 5) { 
+      cache.shift();
+    }
+    return "Вычисляем: " + result;  
   }
 }
 
@@ -24,20 +23,13 @@ function debounceDecoratorNew(func, ms) {
   let timeout = null;
   let flag = false;
 
-  return function wrapper() {
-    if (timeout === null) {
-      func();
+  return function wrapper(...args) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => flag = false, ms);
+
+    if (!flag) {
+      func.apply(this, ...args);
       flag = true;
-      timeout = setTimeout(() => flag = false, ms);
-    } else {
-      if (!flag) {
-        func();
-        flag = true;
-        timeout = setTimeout(() => flag = false, ms);
-      } else {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => flag = false, ms);
-      }
     }
   }
 }
@@ -45,24 +37,17 @@ function debounceDecoratorNew(func, ms) {
 function debounceDecorator2(func, ms) {
   let timeout = null;
   let flag = false;
-  let workCount = 0;
+  wrapper.count = 0;
 
-  function wrapper() {
-    wrapper.count = ++workCount;
+  function wrapper(...args) {
+    wrapper.count++;
 
-    if (timeout === null) {
-      func();
+    clearTimeout(timeout);
+    timeout = setTimeout(() => flag = false, ms);
+
+    if (!flag) {
+      func.apply(this, ...args);
       flag = true;
-      timeout = setTimeout(() => flag = false, ms);
-    } else {
-      if (!flag) {
-        func();
-        flag = true;
-        timeout = setTimeout(() => flag = false, ms);
-      } else {
-        clearTimeout(timeout);
-        timeout = setTimeout(() => flag = false, ms);
-      }
     }
   }
 
